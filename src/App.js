@@ -8,6 +8,7 @@ import { segmentLogsByType } from './Segmenter.js'
 import { PrecisionPicker } from './Components/PrecisionPicker';
 import { PRECISION_MAP } from './Constants';
 import './App.css';
+import { formatSeconds } from './util';
 
 
 let eventsCache = []
@@ -89,12 +90,14 @@ const binFinalizedDataBySeconds = (finalizedData, seconds) => {
     if (timeSlice.time > (currentTime + seconds)) {
       result.push(accumulatedDamage)
       currentTime += seconds
-      accumulatedDamage = {time: currentTime}
+      const formattedTime = formatSeconds(currentTime)
+      accumulatedDamage = {time: currentTime, formattedTime}
     }
     if(timeSlice.time < (currentTime + seconds)) {
       for (const player in timeSlice) {
         if (player === 'time') {
           accumulatedDamage.time = currentTime
+          accumulatedDamage.formattedTime = formatSeconds(currentTime)
         } else {
           if (!accumulatedDamage[player]) {
             accumulatedDamage[player] = Math.floor(timeSlice[player]/seconds)

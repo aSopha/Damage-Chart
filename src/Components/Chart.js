@@ -5,8 +5,6 @@ class Chart extends PureComponent {
   render() {
     const players = addStrokesToPlayers(this.props.players)
     const data = this.props.data
-    const xStartDomain = data.length > 0 ? data[0].time : 0
-    const xEndDomain = data.length > 0 ? data[data.length-1].time : 0
     const yDomain = data.length > 0 ? 'auto' : [0,10000]
     return (
       <div className="Chart">
@@ -21,8 +19,8 @@ class Chart extends PureComponent {
               }
               return <Line key={index} type="monotone" dataKey={player.name} stroke={player.color} strokeWidth={3} dot={false}/>
             })}
-            <XAxis type="number" dataKey="time" domain={[xStartDomain, xEndDomain]} stroke="White"/>
-            <YAxis type="number" stroke="White" domain={yDomain}/>
+            <XAxis dataKey="formattedTime" stroke="White"/>
+            <YAxis type="number" stroke="White" domain={yDomain} />
         </LineChart>
         </ResponsiveContainer>
       </div>
