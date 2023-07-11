@@ -73,7 +73,7 @@ function App() {
     setLogSegments(segments)
   }
 
-  
+
   if (loading || loadingStub) {
     return <div className="App">Loading...</div>;
   }
@@ -90,7 +90,7 @@ function App() {
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
           <div className="Button">
             <button onClick={() => openFileSelector()}>Select Combat Log </button>
-            <button onClick={() => loadStub()}> load the stub jfc </button>
+            <button onClick={() => loadStub()}> Use an example! </button>
             <br />
           </div>
           <div className="ChartAndSliderWrapper" >
@@ -106,7 +106,7 @@ function App() {
       <header className="App-header">
         <div>
           <button onClick={() => {openFileSelector()}}>Select Combat Log </button>
-          <button onClick={() => loadStub()}> load the stub jfc </button>
+          <button onClick={() => loadStub()}> Use an example! </button>
           <br />
         </div>
       </header>
