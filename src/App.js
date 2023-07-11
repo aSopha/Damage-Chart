@@ -10,47 +10,74 @@ import { PRECISION_MAP } from './Constants';
 import './App.css';
 import { formatSeconds } from './util';
 
-let eventsCache = []
-let logSegments
-
 function App() {
   const [segmentIndex, setSegmentIndex] = React.useState(0)
   const [range, setRange] = React.useState([0,9999])
   const [precision, setPrecision] = React.useState('high')
   const [useStub, setUseStub] = React.useState(false)
   const [stub, setStub] = React.useState('')
+  const [eventsCache, setEventsCache] = React.useState([])
+  const [logSegments, setLogSegments] = React.useState()
+  const [loadingStub, setLoadingStub] = React.useState(false)
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
-    onFilesSelected: () => {
-      setSegmentIndex(0)
+    onFilesSelected: (data) => {
+      setUseStub(false)
+      if(data.filesContent[0]) {
+        handleNewLog(data.filesContent[0].content)
+      }
     },
     accept: '.txt',
   });
 
   const loadStub = async () => {
-    const res = await fetch('/Damage-Chart/StubLog.txt')
-    const data = await res.text()
-    setStub(data)
+    if(useStub) {
+      return
+    }
+    if(!stub) {
+      setLoadingStub(true)
+      const res = await fetch('/Damage-Chart/StubLog.txt')
+      const data = await res.text()
+      setStub(data)
+      setLoadingStub(false)
+      handleNewLog(data)
+    } else {
+      await handleNewLog(stub)
+    }
+    setUseStub(true)
+  }
+  const handleSegmentChange = (sIndex) => {
+    const rawText = stub ? stub : filesContent[0].content
+    if (!eventsCache[sIndex]) {
+      const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
+      const segmentLines = stub.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
+      const logSegment = segments[sIndex]
+      const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+      eventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+      setEventsCache([...eventsCache])
+    }
+    setSegmentIndex(sIndex)
   }
 
-  if (loading) {
-    eventsCache = []
-    logSegments = undefined
+  const handleNewLog = (rawText) => {
+    setSegmentIndex(0)
+    setEventsCache([])
+    const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
+      const segmentLines = rawText.slice(segments[segmentIndex].startIndex, segments[segmentIndex].endIndex)
+      const logSegment = segments[segmentIndex]
+      const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+      const newEventsCache = []
+      if (!newEventsCache[segmentIndex]) {
+        eventsCache[segmentIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+        setEventsCache([...eventsCache])
+      }
+    setLogSegments(segments)
+  }
+
+  
+  if (loading || loadingStub) {
     return <div className="App">Loading...</div>;
   }
-  //if ((filesContent && filesContent[0])) {
-  if (stub.length > 0) {
-    //const allLines = useStub ? stub : filesContent[0].content
-    const allLines = stub
-    if(!logSegments) {
-      logSegments = segmentLogsByType(allLines, 'arena')
-      logSegments = [...logSegments, ...segmentLogsByType(allLines, 'dungeon')]
-    }
-    const segmentLines = allLines.slice(logSegments[segmentIndex].startIndex, logSegments[segmentIndex].endIndex)
-    const logSegment = logSegments[segmentIndex]
-    let filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
-    if (!eventsCache[segmentIndex]) {
-      eventsCache[segmentIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
-    }
+  if (eventsCache[segmentIndex] && logSegments) {
     const { filteredBinnedEvents, players } = eventsCache[segmentIndex]
     
     const binnedDataBySeconds = binFinalizedDataBySeconds(filteredBinnedEvents, PRECISION_MAP[precision])
@@ -60,7 +87,7 @@ function App() {
       <div className="App">
         <header className="App-header">
         </header>
-        <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={setSegmentIndex} setRange={setRange}/>
+        <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
           <div className="Button">
             <button onClick={() => openFileSelector()}>Select Combat Log </button>
             <button onClick={() => loadStub()}> load the stub jfc </button>
@@ -97,7 +124,6 @@ const binFinalizedDataBySeconds = (finalizedData, seconds) => {
   
   let currentTime = 0;
   let accumulatedDamage = {time: currentTime}
-  console.log(finalizedData, seconds)
   for (const timeSlice of finalizedData) {
     if (timeSlice.time > (currentTime + seconds)) {
       result.push(accumulatedDamage)
@@ -120,7 +146,6 @@ const binFinalizedDataBySeconds = (finalizedData, seconds) => {
       } 
     }
   }
-  console.log(result, 'result')
   return result
 }
 
@@ -136,7 +161,6 @@ const fillInactiveTime = (binnedPlayerEvents, players) => {
     }
     return filledEvent
   })
-  console.log(filledEvents)
   return filledEvents
 }
 
