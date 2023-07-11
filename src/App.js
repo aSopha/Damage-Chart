@@ -10,13 +10,15 @@ import { PRECISION_MAP } from './Constants';
 import './App.css';
 import { formatSeconds } from './util';
 
-
 let eventsCache = []
 let logSegments
+
 function App() {
   const [segmentIndex, setSegmentIndex] = React.useState(0)
   const [range, setRange] = React.useState([0,9999])
   const [precision, setPrecision] = React.useState('high')
+  const [useStub, setUseStub] = React.useState(false)
+  const [stub, setStub] = React.useState('')
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
     onFilesSelected: () => {
       setSegmentIndex(0)
@@ -24,13 +26,21 @@ function App() {
     accept: '.txt',
   });
 
+  const loadStub = async () => {
+    const res = await fetch('/Damage-Chart/StubLog.txt')
+    const data = await res.text()
+    setStub(data)
+  }
+
   if (loading) {
     eventsCache = []
     logSegments = undefined
     return <div className="App">Loading...</div>;
   }
-  if (filesContent && filesContent[0]) {
-    const allLines = filesContent[0].content
+  //if ((filesContent && filesContent[0])) {
+  if (stub.length > 0) {
+    //const allLines = useStub ? stub : filesContent[0].content
+    const allLines = stub
     if(!logSegments) {
       logSegments = segmentLogsByType(allLines, 'arena')
       logSegments = [...logSegments, ...segmentLogsByType(allLines, 'dungeon')]
@@ -53,6 +63,7 @@ function App() {
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={setSegmentIndex} setRange={setRange}/>
           <div className="Button">
             <button onClick={() => openFileSelector()}>Select Combat Log </button>
+            <button onClick={() => loadStub()}> load the stub jfc </button>
             <br />
           </div>
           <div className="ChartAndSliderWrapper" >
@@ -68,6 +79,7 @@ function App() {
       <header className="App-header">
         <div>
           <button onClick={() => {openFileSelector()}}>Select Combat Log </button>
+          <button onClick={() => loadStub()}> load the stub jfc </button>
           <br />
         </div>
       </header>
