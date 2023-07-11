@@ -6,7 +6,6 @@ export const segmentLogsByType = (entireLog, segmentType) => {
   let startIndex = regexIndexOf(entireLog, REGEX_MAPS[segmentType].startRegex ,0)
   let offset = (regexIndexOf(entireLog, REGEX_MAPS[segmentType].endRegex ,startIndex))
   let endIndex = entireLog.slice(offset).indexOf('\r\n') + 4 + offset
-  console.log(startIndex,offset,endIndex, segmentType)
   if(startIndex >= 0 && endIndex >= 0) {
     segments.push({type: segmentType, startIndex, endIndex})
   }
@@ -16,7 +15,6 @@ export const segmentLogsByType = (entireLog, segmentType) => {
       endIndex = entireLog.slice(offset).indexOf('\r\n') + 4 + offset
       segments.push({type: segmentType, startIndex, endIndex})
     }
-    console.log(segments, segmentType)
   return segments
  
 }
