@@ -49,7 +49,7 @@ function App() {
     const rawText = useStub ? stub : filesContent[0].content
     if (!eventsCache[sIndex]) {
       const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
-      const segmentLines = stub.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
+      const segmentLines = rawText.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
       const logSegment = segments[sIndex]
       const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
       eventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
