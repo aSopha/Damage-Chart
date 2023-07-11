@@ -52,8 +52,9 @@ function App() {
       const segmentLines = rawText.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
       const logSegment = segments[sIndex]
       const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
-      eventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
-      setEventsCache([...eventsCache])
+      const newEventsCache = [...eventsCache]
+      newEventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+      setEventsCache(newEventsCache)
     }
     setSegmentIndex(sIndex)
   }
@@ -62,14 +63,12 @@ function App() {
     setSegmentIndex(0)
     setEventsCache([])
     const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
-      const segmentLines = rawText.slice(segments[segmentIndex].startIndex, segments[segmentIndex].endIndex)
-      const logSegment = segments[segmentIndex]
-      const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
-      const newEventsCache = []
-      if (!newEventsCache[segmentIndex]) {
-        eventsCache[segmentIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
-        setEventsCache([...eventsCache])
-      }
+    const segmentLines = rawText.slice(segments[0].startIndex, segments[0].endIndex)
+    const logSegment = segments[0]
+    const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+    const newEventsCache = []
+    newEventsCache[0] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+    setEventsCache(newEventsCache)
     setLogSegments(segments)
   }
 
@@ -89,8 +88,8 @@ function App() {
         </header>
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
           <div className="Button">
-            <button onClick={() => openFileSelector()}>Select Combat Log </button>
-            <button onClick={() => loadStub()}> Try Example Data! </button>
+            <button className="SelectCombatLogButton" onClick={() => openFileSelector()}>Select Combat Log </button>
+            <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
             <br />
           </div>
           <div className="ChartAndSliderWrapper" >
@@ -105,8 +104,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>
-          <button onClick={() => {openFileSelector()}}>Select Combat Log </button>
-          <button onClick={() => loadStub()}> Try Example Data! </button>
+          <button className="SelectCombatLogButton" onClick={() => {openFileSelector()}}>Select Combat Log </button>
+          <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
           <br />
         </div>
       </header>

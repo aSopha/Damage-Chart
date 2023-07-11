@@ -14,7 +14,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black
+  color: white
 }
 
 .Button {
@@ -56,43 +56,54 @@ p {
   margin: 1em;
 }
 
-.SegmentButtonWrapper {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-  cursor: pointer;
-  background-color: rgb(157, 136, 250);
-  border-top: 2px solid #CCCCCC;
-  border-right: 2px solid #333333;
-  border-bottom: 2px solid #333333;
-  border-left: 2px solid #CCCCCC;
-  margin: 1rem;
-}
-.SegmentButtonWrapper:hover {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-  cursor: pointer;
-  background-color: rgb(255, 255, 255);
-  border-top: 2px solid #CCCCCC;
-  border-right: 2px solid #333333;
-  border-bottom: 2px solid #333333;
-  border-left: 2px solid #CCCCCC;
-  margin: 1rem;
-}
-
-.SegmentButtonWrapper .Active {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-  cursor: pointer;
-  background-color: rgb(238, 91, 91);
-  padding: 0;
-}
-
 .SegmentButton {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: #33937F;
+  font-size: 18px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* border: 2px solid #000000; */
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 5px;
   font-weight: bold;
   list-style-type: none;
+  width: 7em;
+  height: 2em;
+  /* padding: 0; */
+}
+
+.SegmentButton.arena {
+  background-color: #33937F;
+}
+.SegmentButton.dungeon {
+  background-color: #D9548F;
+}
+.SegmentButton.arena:hover {
+  cursor: pointer;
+  background-color: #54CEB4;
+}
+.SegmentButton.dungeon:hover {
+  cursor: pointer;
+  background-color: #EF98BF;
+}
+.SegmentButton.Active.arena {
+  cursor: pointer;
+  background-color: #54CEB4;
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  padding: 0;
+}
+.SegmentButton.Active.dungeon {
+  cursor: pointer;
+  background-color: #EF98BF;
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  padding: 0;
 }
 
 .ChartAndSliderWrapper {
@@ -106,6 +117,46 @@ p {
 
 .PrecisionPicker {
   color: white;
+}
+
+.App .SelectCombatLogButton {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+  background-color: #33937F;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  font-size: 18px;
+  font-weight: bold;
+  list-style-type: none;
+  width: 16em;
+  height: 2em;
+  padding: 0;
+}
+.App .SelectCombatLogButton:hover {
+  background-color: #54CEB4;
+  
+}
+.App .AddExampleDataButton {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+  background-color: #7172c5;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  font-size: 18px;
+  font-weight: bold;
+  list-style-type: none;
+  width: 12em;
+  height: 2em;
+  padding: 0;
+}
+.App .AddExampleDataButton:hover {
+  background-color: #8788EE;
 }
 
 .range-slider {
