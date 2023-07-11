@@ -46,7 +46,7 @@ function App() {
     setUseStub(true)
   }
   const handleSegmentChange = (sIndex) => {
-    const rawText = stub ? stub : filesContent[0].content
+    const rawText = useStub ? stub : filesContent[0].content
     if (!eventsCache[sIndex]) {
       const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
       const segmentLines = stub.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
