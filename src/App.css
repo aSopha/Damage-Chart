@@ -27,6 +27,7 @@ p {
   width: 100%;
 }
 input[type='radio']:after {
+  cursor: pointer;
   width: 15px;
   height: 15px;
   border-radius: 15px;
@@ -41,6 +42,7 @@ input[type='radio']:after {
 }
 
 input[type='radio']:checked:after {
+  cursor: pointer;
   width: 15px;
   height: 15px;
   border-radius: 15px;
