@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Damage-Chart/static/css/main.abd7768c.css",
-    "main.js": "/Damage-Chart/static/js/main.f7069902.js",
+    "main.css": "/Damage-Chart/static/css/main.061c05c1.css",
+    "main.js": "/Damage-Chart/static/js/main.7b958b5e.js",
     "static/js/787.c78ef081.chunk.js": "/Damage-Chart/static/js/787.c78ef081.chunk.js",
+    "static/media/Header.svg": "/Damage-Chart/static/media/Header.0c8c6671bc8a6935de4a9f80ccac7444.svg",
     "index.html": "/Damage-Chart/index.html",
-    "main.abd7768c.css.map": "/Damage-Chart/static/css/main.abd7768c.css.map",
-    "main.f7069902.js.map": "/Damage-Chart/static/js/main.f7069902.js.map",
+    "main.061c05c1.css.map": "/Damage-Chart/static/css/main.061c05c1.css.map",
+    "main.7b958b5e.js.map": "/Damage-Chart/static/js/main.7b958b5e.js.map",
     "787.c78ef081.chunk.js.map": "/Damage-Chart/static/js/787.c78ef081.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.abd7768c.css",
-    "static/js/main.f7069902.js"
+    "static/css/main.061c05c1.css",
+    "static/js/main.7b958b5e.js"
   ]
 }
