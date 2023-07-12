@@ -23,6 +23,27 @@ p {
   grid-column-start: 1;
   grid-column-end: 4;
 }
+.LoadingSpinner {
+  grid-row-start: 1;
+  grid-row-end: 5;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  width: 25%;
+  align-self: center;
+  justify-self: center;
+  animation-name: spin;
+  animation-duration: 20000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
 .App-header img {
   width: 100%;
 }
@@ -225,6 +246,34 @@ input[type='radio']:checked:after {
   margin-bottom: 5em;
 }
 .App .AddExampleDataButton:hover {
+  background-color: #8788EE;
+}
+
+.App .SeeExampleDataButton {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  z-index: 3;
+  align-self: end;
+  justify-self: left;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #7172c5;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  font-size: 18px;
+  font-weight: bold;
+  list-style-type: none;
+  width: 11em;
+  padding: 0;
+  margin-bottom: 2em;
+}
+.App .SeeExampleDataButton:hover {
   background-color: #8788EE;
 }
 

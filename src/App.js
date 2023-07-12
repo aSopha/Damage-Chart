@@ -10,6 +10,7 @@ import { PRECISION_MAP } from './Constants';
 import './App.css';
 import { formatSeconds } from './util';
 import Header from './Header.svg'
+import LoadingSVG from './Loading.svg'
 
 function App() {
   const [segmentIndex, setSegmentIndex] = React.useState(0)
@@ -19,13 +20,16 @@ function App() {
   const [stub, setStub] = React.useState('')
   const [eventsCache, setEventsCache] = React.useState([])
   const [logSegments, setLogSegments] = React.useState()
+  const [waitForLoading, setWaitForLoading] = React.useState(false)
   const [loadingStub, setLoadingStub] = React.useState(false)
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
     onFilesSelected: (data) => {
       setUseStub(false)
+      setWaitForLoading(true)
       if(data.filesContent[0]) {
         handleNewLog(data.filesContent[0].content)
       }
+      setTimeout(() => setWaitForLoading(false), 1500)
     },
     accept: '.txt',
   });
@@ -36,11 +40,13 @@ function App() {
     }
     if(!stub) {
       setLoadingStub(true)
+      setWaitForLoading(true)
       const res = await fetch('/Damage-Chart/StubLog.txt')
       const data = await res.text()
       setStub(data)
       setLoadingStub(false)
       handleNewLog(data)
+      setTimeout(() => setWaitForLoading(false), 1500)
     } else {
       await handleNewLog(stub)
     }
@@ -73,9 +79,11 @@ function App() {
     setLogSegments(segments)
   }
 
-  
-  if (loading || loadingStub) {
-    return <div className="App">Loading...</div>;
+
+  if (waitForLoading) {
+    return <div className="App">
+      <img className="LoadingSpinner" src={LoadingSVG} />
+    </div>;
   }
   if (eventsCache[segmentIndex] && logSegments) {
     const { filteredBinnedEvents, players } = eventsCache[segmentIndex]
@@ -91,6 +99,7 @@ function App() {
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
             <button className="SelectCombatLogButton" onClick={() => openFileSelector()}>Select Combat Log </button>
             <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
+            <a className="SeeExampleDataButton" href="https://asopha.github.io/Damage-Chart/StubLog.txt" target="_blank"> See Example Data</a>
           <div className="ChartAndControls" >
             <Chart data={dataWindow} players={players}/>
             <div className="ControlsWrapper">
