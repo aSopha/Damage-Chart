@@ -9,6 +9,7 @@ import { PrecisionPicker } from './Components/PrecisionPicker';
 import { PRECISION_MAP } from './Constants';
 import './App.css';
 import { formatSeconds } from './util';
+import Header from './Header.svg'
 
 function App() {
   const [segmentIndex, setSegmentIndex] = React.useState(0)
@@ -52,8 +53,9 @@ function App() {
       const segmentLines = rawText.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
       const logSegment = segments[sIndex]
       const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
-      eventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
-      setEventsCache([...eventsCache])
+      const newEventsCache = [...eventsCache]
+      newEventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+      setEventsCache(newEventsCache)
     }
     setSegmentIndex(sIndex)
   }
@@ -62,14 +64,12 @@ function App() {
     setSegmentIndex(0)
     setEventsCache([])
     const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
-      const segmentLines = rawText.slice(segments[segmentIndex].startIndex, segments[segmentIndex].endIndex)
-      const logSegment = segments[segmentIndex]
-      const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
-      const newEventsCache = []
-      if (!newEventsCache[segmentIndex]) {
-        eventsCache[segmentIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
-        setEventsCache([...eventsCache])
-      }
+    const segmentLines = rawText.slice(segments[0].startIndex, segments[0].endIndex)
+    const logSegment = segments[0]
+    const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+    const newEventsCache = []
+    newEventsCache[0] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
+    setEventsCache(newEventsCache)
     setLogSegments(segments)
   }
 
@@ -79,24 +79,24 @@ function App() {
   }
   if (eventsCache[segmentIndex] && logSegments) {
     const { filteredBinnedEvents, players } = eventsCache[segmentIndex]
-    
+
     const binnedDataBySeconds = binFinalizedDataBySeconds(filteredBinnedEvents, PRECISION_MAP[precision])
     const finalizedData = fillInactiveTime(binnedDataBySeconds, players)
     const dataWindow = finalizedData.slice(range[0], range[1])
     return (
       <div className="App">
         <header className="App-header">
+          <img src={Header} />
         </header>
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
-          <div className="Button">
-            <button onClick={() => openFileSelector()}>Select Combat Log </button>
-            <button onClick={() => loadStub()}> Try Example Data! </button>
-            <br />
-          </div>
-          <div className="ChartAndSliderWrapper" >
-            <PrecisionPicker value={precision} onChange={setPrecision} setRange={setRange}/>
+            <button className="SelectCombatLogButton" onClick={() => openFileSelector()}>Select Combat Log </button>
+            <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
+          <div className="ChartAndControls" >
             <Chart data={dataWindow} players={players}/>
-            <RangeSlider min={0} max={finalizedData.length} value={range} onInput={setRange}/>
+            <div className="ControlsWrapper">
+              <RangeSlider min={0} max={finalizedData.length} value={range} onInput={setRange}/>
+              <PrecisionPicker value={precision} onChange={setPrecision} setRange={setRange}/>
+            </div>
           </div>
       </div>
     );
@@ -104,12 +104,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div>
-          <button onClick={() => {openFileSelector()}}>Select Combat Log </button>
-          <button onClick={() => loadStub()}> Try Example Data! </button>
-          <br />
-        </div>
+        <img src={Header} />
       </header>
+      <div>
+        <button className="SelectCombatLogButton" onClick={() => {openFileSelector()}}>Select Combat Log </button>
+        <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
+        <br />
+      </div>
     </div>
   );
 }
