@@ -1,4 +1,5 @@
 import { ATTRIBUTES_MAP, spellBlackList, WOW_SPEC_CLASS_LOOKUP, WOW_CLASS_COLOR_LOOKUP } from './Constants';
+import { formatSeconds } from './util';
 import * as moment from 'moment';
 
 export const parseEvents = (combatLog, filterDamageNotDoneToPlayers) => {
@@ -211,6 +212,8 @@ const binPlayerAndPetEvents = (playerEvents, petEvents, players) => {
     if (!acc[currentEvent.relativeTime][sourceName]) {
       acc[currentEvent.relativeTime][sourceName] = 0
       acc[currentEvent.relativeTime].time = currentEvent.relativeTime
+      acc[currentEvent.relativeTime].formattedTime = formatSeconds(currentEvent.relativeTime)
+
     } 
     const combinedDamage = combineDealtAndAbsorbedDamage(currentEvent)
     acc[currentEvent.relativeTime][sourceName] += combinedDamage
@@ -225,6 +228,7 @@ const binPlayerAndPetEvents = (playerEvents, petEvents, players) => {
     if (!acc[currentEvent.relativeTime][sourceName]) {
       acc[currentEvent.relativeTime][sourceName] = 0
       acc[currentEvent.relativeTime].time = currentEvent.relativeTime
+      acc[currentEvent.relativeTime].formattedTime = formatSeconds(currentEvent.relativeTime)
     } 
     const combinedDamage = combineDealtAndAbsorbedDamage(currentEvent)
     acc[currentEvent.relativeTime][sourceName] += combinedDamage

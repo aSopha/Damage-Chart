@@ -137,7 +137,7 @@ const binFinalizedDataBySeconds = (finalizedData, seconds) => {
         if (player === 'time') {
           accumulatedDamage.time = currentTime
           accumulatedDamage.formattedTime = formatSeconds(currentTime)
-        } else {
+        } else if (player!== 'formattedTime'){
           if (!accumulatedDamage[player]) {
             accumulatedDamage[player] = Math.floor(timeSlice[player]/seconds)
           } else {
