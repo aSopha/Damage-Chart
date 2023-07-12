@@ -5,32 +5,60 @@ p {
 .App {
   margin: 0;
   padding: 0;
-  grid-template-columns: 1fr 8fr;
-  grid-template-rows: 1fr 10fr;
+  grid-template-columns: .25fr 1fr 8fr;
+  grid-template-rows: auto .5fr 5fr auto;
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   display: grid;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   color: white
 }
-
-.Button {
-  display: grid;
-  justify-self: center;
-  grid-column-start: 1;
-  grid-column-end: 2;
+.App-header {
+  align-self: start;
   grid-row-start: 1;
   grid-row-end: 2;
-  margin: 1em;
+  grid-column-start: 1;
+  grid-column-end: 4;
 }
+.App-header img {
+  width: 100%;
+}
+input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #616368;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #EF98BF;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
 .Chart {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
-  height: 60rem;
+  height: 50rem;
   width: 99%;
 }
 .App-link {
@@ -46,12 +74,11 @@ p {
 
 .SegmentList {
   align-self: start;
-  justify-self: center;
-  grid-column-start: 1;
+  justify-self: left;
+  grid-column-start: 2;
   grid-column-end: 2;
-  grid-row-start: 2;
+  grid-row-start: 3;
   grid-row-end: 3;
-  background: #333333;
   padding: 0;
   margin: 1em;
 }
@@ -60,13 +87,14 @@ p {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  z-index: 3;
   cursor: pointer;
   box-sizing: border-box;
   background-color: #33937F;
   font-size: 18px;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  /* border: 2px solid #000000; */
+  border: 2px solid #00000000;
   padding-left: 2px;
   padding-right: 2px;
   border-radius: 5px;
@@ -75,6 +103,12 @@ p {
   width: 7em;
   height: 2em;
   /* padding: 0; */
+}
+.SegmentButton .SegmentButtonText {
+  font-size: 14px;
+  margin: auto;
+  padding-top: .5em;
+  padding-bottom: .75em;
 }
 
 .SegmentButton.arena {
@@ -106,23 +140,47 @@ p {
   padding: 0;
 }
 
-.ChartAndSliderWrapper {
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 3;
+.ChartAndControls {
+  position: relative;
+  left: -6em;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 4;
   display: flex;
   flex-direction: column;
 }
 
+.ControlsWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -5em;
+}
+
 .PrecisionPicker {
+  margin-top: 2em;
+}
+
+.ControlsWrapper .PrecisionPicker .PrecisionPickerText {
+  display: inline;
   color: white;
+  font-size: 16px;
+  margin-right: 2em;
 }
 
 .App .SelectCombatLogButton {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  z-index: 3;
+  align-self: start;
+  justify-self: left;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  margin: 1em;
   cursor: pointer;
   background-color: #33937F;
   color: white;
@@ -131,7 +189,7 @@ p {
   font-size: 18px;
   font-weight: bold;
   list-style-type: none;
-  width: 16em;
+  width: 13em;
   height: 2em;
   padding: 0;
 }
@@ -143,6 +201,14 @@ p {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  z-index: 3;
+  align-self: end;
+  justify-self: left;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 3;
+
   cursor: pointer;
   background-color: #7172c5;
   color: white;
@@ -151,9 +217,10 @@ p {
   font-size: 18px;
   font-weight: bold;
   list-style-type: none;
-  width: 12em;
+  width: 11em;
   height: 2em;
   padding: 0;
+  margin-bottom: 5em;
 }
 .App .AddExampleDataButton:hover {
   background-color: #8788EE;
@@ -170,7 +237,6 @@ p {
   height: 8px;
   background: #ddd;
   align-self: center;
-  top: -5em;
   border-radius: 4px;
 }
 .range-slider[data-vertical] {
@@ -189,7 +255,7 @@ p {
   height: 24px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: #2196f3;
+  background: #8f91fc;
 }
 .range-slider .range-slider__thumb[data-active] {
   transform: translate(-50%, -50%) scale(1.25);
@@ -215,7 +281,7 @@ p {
   top: 50%;
   width: 100%;
   height: 100%;
-  background: #51adf6;
+  background: #8788EE;
 }
 .range-slider[data-vertical] .range-slider__range {
   left: 50%;

@@ -1,6 +1,7 @@
 export const spellBlackList = [
   'Void Shift',
-  'Cauterize'
+  'Cauterize',
+  'Dark Pact',
 ]
 
 const spellAbsorbedAttributes = [

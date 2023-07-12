@@ -5,7 +5,7 @@ const SegmentPickerButton = (props) => {
         props.setRange([0, 999999])
     }
     return (
-        <li className={className + ` ${props.segment.type}`} onClick={() => onButtonClick()} >#{props.index+1}-{props.segment.type}</li>
+        <li className={className + ` ${props.segment.type}`} onClick={() => onButtonClick()} ><p className="SegmentButtonText">#{props.index+1}-{props.segment.type}</p></li>
     );
 }
 

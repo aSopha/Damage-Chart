@@ -301,7 +301,7 @@ const populateHealEventsIntoPlayers = (lines, players) => {
 }
 
 const combineDealtAndAbsorbedDamage = (line) => {
-  return (line.subevent === 'SPELL_ABSORBED') ? parseInt(line.absorbed) : (parseInt(line.amount) + parseInt(line.absorbed))
+  return (line.subevent === 'SPELL_ABSORBED') ? parseInt(line.absorbed) : (parseInt(line.amount))
 }
 const populatePlayerNames = (players) => {
   for (const [player, data] of players.entries()) {

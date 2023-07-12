@@ -9,6 +9,7 @@ import { PrecisionPicker } from './Components/PrecisionPicker';
 import { PRECISION_MAP } from './Constants';
 import './App.css';
 import { formatSeconds } from './util';
+import Header from './Header.svg'
 
 function App() {
   const [segmentIndex, setSegmentIndex] = React.useState(0)
@@ -78,24 +79,24 @@ function App() {
   }
   if (eventsCache[segmentIndex] && logSegments) {
     const { filteredBinnedEvents, players } = eventsCache[segmentIndex]
-    
+
     const binnedDataBySeconds = binFinalizedDataBySeconds(filteredBinnedEvents, PRECISION_MAP[precision])
     const finalizedData = fillInactiveTime(binnedDataBySeconds, players)
     const dataWindow = finalizedData.slice(range[0], range[1])
     return (
       <div className="App">
         <header className="App-header">
+          <img src={Header} />
         </header>
         <SegmentPicker activeSegment={segmentIndex} segments={logSegments} onButtonClick={handleSegmentChange} setRange={setRange}/>
-          <div className="Button">
             <button className="SelectCombatLogButton" onClick={() => openFileSelector()}>Select Combat Log </button>
             <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
-            <br />
-          </div>
-          <div className="ChartAndSliderWrapper" >
-            <PrecisionPicker value={precision} onChange={setPrecision} setRange={setRange}/>
+          <div className="ChartAndControls" >
             <Chart data={dataWindow} players={players}/>
-            <RangeSlider min={0} max={finalizedData.length} value={range} onInput={setRange}/>
+            <div className="ControlsWrapper">
+              <RangeSlider min={0} max={finalizedData.length} value={range} onInput={setRange}/>
+              <PrecisionPicker value={precision} onChange={setPrecision} setRange={setRange}/>
+            </div>
           </div>
       </div>
     );
@@ -103,12 +104,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div>
-          <button className="SelectCombatLogButton" onClick={() => {openFileSelector()}}>Select Combat Log </button>
-          <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
-          <br />
-        </div>
+        <img src={Header} />
       </header>
+      <div>
+        <button className="SelectCombatLogButton" onClick={() => {openFileSelector()}}>Select Combat Log </button>
+        <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
+        <br />
+      </div>
     </div>
   );
 }
