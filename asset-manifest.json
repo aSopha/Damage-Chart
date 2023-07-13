@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/Damage-Chart/static/css/main.b2cd5e4e.css",
-    "main.js": "/Damage-Chart/static/js/main.a94425f4.js",
+    "main.css": "/Damage-Chart/static/css/main.be6ab0e3.css",
+    "main.js": "/Damage-Chart/static/js/main.c95ded19.js",
     "static/js/787.c78ef081.chunk.js": "/Damage-Chart/static/js/787.c78ef081.chunk.js",
     "static/media/Loading.svg": "/Damage-Chart/static/media/Loading.70ac2ba642e56ca43b8ca08c7fc55853.svg",
     "static/media/Header.svg": "/Damage-Chart/static/media/Header.0c8c6671bc8a6935de4a9f80ccac7444.svg",
     "index.html": "/Damage-Chart/index.html",
-    "main.b2cd5e4e.css.map": "/Damage-Chart/static/css/main.b2cd5e4e.css.map",
-    "main.a94425f4.js.map": "/Damage-Chart/static/js/main.a94425f4.js.map",
+    "main.be6ab0e3.css.map": "/Damage-Chart/static/css/main.be6ab0e3.css.map",
+    "main.c95ded19.js.map": "/Damage-Chart/static/js/main.c95ded19.js.map",
     "787.c78ef081.chunk.js.map": "/Damage-Chart/static/js/787.c78ef081.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b2cd5e4e.css",
-    "static/js/main.a94425f4.js"
+    "static/css/main.be6ab0e3.css",
+    "static/js/main.c95ded19.js"
   ]
 }
