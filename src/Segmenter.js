@@ -28,7 +28,9 @@ export const segmentLogsByType = (entireLog, segmentType) => {
         offset = shuffleRoundEnd < offset ? shuffleRoundEnd : offset;
       }
       endIndex = entireLog.slice(offset).indexOf('\r\n') + 4 + offset
-      segments.push({type: segmentType, startIndex, endIndex})
+      if ((startIndex !== -1 && endIndex !== -1) && startIndex < endIndex) {
+        segments.push({type: segmentType, startIndex, endIndex})
+      }
       if (segmentType === 'shuffle') {
         nextStart = shuffleRoundEnd
       } else {
