@@ -252,8 +252,9 @@ export const WOW_CLASS_COLOR_LOOKUP = {
   Warrior: '#C69B6D',
 }
 
-const arenaStartRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  ARENA_MATCH_START/g;
+const arenaStartRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  ARENA_MATCH_START,.{2,20}\dv\d/g;
 const arenaEndRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  ARENA_MATCH_END/g;
+const shuffleStartRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  ARENA_MATCH_START,.{2,20}Solo Shuffle/g;
 
 const dungeonStartRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  CHALLENGE_MODE_START/g;
 const dungeonEndRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  CHALLENGE_MODE_END/g;
@@ -261,6 +262,11 @@ const dungeonEndRegex = /\d{1,2}\/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d{1,3}  CHALL
 export const REGEX_MAPS = {
   arena: {
     startRegex: arenaStartRegex,
+    endRegex: arenaEndRegex
+  },
+  shuffle: {
+    startRegex: shuffleStartRegex,
+    shuffleRoundEndRegex : shuffleStartRegex,
     endRegex: arenaEndRegex
   },
   dungeon: {

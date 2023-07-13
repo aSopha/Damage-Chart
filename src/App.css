@@ -140,6 +140,9 @@ input[type='radio']:checked:after {
 .SegmentButton.dungeon {
   background-color: #D9548F;
 }
+.SegmentButton.shuffle {
+  background-color: #54bed9;
+}
 .SegmentButton.arena:hover {
   cursor: pointer;
   background-color: #54CEB4;
@@ -147,6 +150,10 @@ input[type='radio']:checked:after {
 .SegmentButton.dungeon:hover {
   cursor: pointer;
   background-color: #EF98BF;
+}
+.SegmentButton.shuffle:hover {
+  cursor: pointer;
+  background-color: #98efeb;
 }
 .SegmentButton.Active.arena {
   cursor: pointer;
@@ -158,6 +165,13 @@ input[type='radio']:checked:after {
 .SegmentButton.Active.dungeon {
   cursor: pointer;
   background-color: #EF98BF;
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  padding: 0;
+}
+.SegmentButton.Active.shuffle {
+  cursor: pointer;
+  background-color: #98efeb;
   border: 2px solid #FFFFFF;
   border-radius: 5px;
   padding: 0;

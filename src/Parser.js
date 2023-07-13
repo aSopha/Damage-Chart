@@ -135,7 +135,7 @@ const addPetsToPlayersFromSwingDamage = (petSwingDamageEvents, players) => {
     const ownerGUID = event.ownerGUID
     if (ownerGUID) {
       const owner = playersWithPets.get(ownerGUID)
-      if (!owner.pets.includes(event.sourceGUID)) {
+      if (owner && !owner.pets.includes(event.sourceGUID)) {
         owner.pets.push(event.sourceGUID)
         playersWithPets.set(ownerGUID, owner)
       }

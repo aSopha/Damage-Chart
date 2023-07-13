@@ -55,10 +55,10 @@ function App() {
   const handleSegmentChange = (sIndex) => {
     const rawText = useStub ? stub : filesContent[0].content
     if (!eventsCache[sIndex]) {
-      const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
+      const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'shuffle'), ...segmentLogsByType(rawText, 'dungeon')]
       const segmentLines = rawText.slice(segments[sIndex].startIndex, segments[sIndex].endIndex)
       const logSegment = segments[sIndex]
-      const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+      const filterDamageNotDoneToPlayers = (logSegment.type === 'arena' || logSegment.type === 'shuffle') ? true : false
       const newEventsCache = [...eventsCache]
       newEventsCache[sIndex] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
       setEventsCache(newEventsCache)
@@ -69,10 +69,10 @@ function App() {
   const handleNewLog = (rawText) => {
     setSegmentIndex(0)
     setEventsCache([])
-    const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'dungeon')]
+    const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'shuffle'), ...segmentLogsByType(rawText, 'dungeon')]
     const segmentLines = rawText.slice(segments[0].startIndex, segments[0].endIndex)
     const logSegment = segments[0]
-    const filterDamageNotDoneToPlayers = logSegment.type === 'arena' ? true : false
+    const filterDamageNotDoneToPlayers = (logSegment.type === 'arena' || logSegment.type === 'shuffle')  ? true : false
     const newEventsCache = []
     newEventsCache[0] = parseEvents(segmentLines, filterDamageNotDoneToPlayers)
     setEventsCache(newEventsCache)
