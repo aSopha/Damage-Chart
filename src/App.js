@@ -13,6 +13,7 @@ import Header from './Header.svg'
 import LoadingSVG from './Loading.svg'
 
 function App() {
+  const [validLog, setValidLog] = React.useState(true)
   const [segmentIndex, setSegmentIndex] = React.useState(0)
   const [range, setRange] = React.useState([0,9999])
   const [precision, setPrecision] = React.useState('high')
@@ -69,6 +70,12 @@ function App() {
   const handleNewLog = (rawText) => {
     setSegmentIndex(0)
     setEventsCache([])
+    if (!rawText.includes("ADVANCED_LOG_ENABLED")) {
+      setValidLog(false)
+      return
+    } else if (!validLog) {
+      setValidLog(true)
+    }
     const segments = [...segmentLogsByType(rawText, 'arena'), ...segmentLogsByType(rawText, 'shuffle'), ...segmentLogsByType(rawText, 'dungeon')]
     const segmentLines = rawText.slice(segments[0].startIndex, segments[0].endIndex)
     const logSegment = segments[0]
@@ -79,7 +86,21 @@ function App() {
     setLogSegments(segments)
   }
 
-
+  if (!validLog) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={Header} />
+        </header>
+        <h2>Invalid Log - Please Select An Advanced Combat Log</h2>
+        <div>
+          <button className="SelectCombatLogButton" onClick={() => {openFileSelector()}}>Select Combat Log </button>
+          <button className="AddExampleDataButton" onClick={() => loadStub()}> Try Example Data! </button>
+          <br />
+        </div>
+      </div>
+    );
+  }
   if (waitForLoading) {
     return <div className="App">
       <img className="LoadingSpinner" src={LoadingSVG} />

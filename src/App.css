@@ -2,6 +2,14 @@ p {
   font-family: verdana;
   font-size: 20px;
 }
+
+h2 {
+  display: flex;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
 .App {
   margin: 0;
   padding: 0;
